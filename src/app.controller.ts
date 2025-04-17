@@ -31,6 +31,7 @@ export class AppController {
     @Body()
     bodyData: postTest,
   ) {
+    console.log(bodyData)
     return bodyData
   }
 
