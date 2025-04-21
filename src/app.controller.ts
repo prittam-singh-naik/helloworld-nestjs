@@ -11,28 +11,28 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('new')
-  helloWorld() {
-    return this.appService.getHelloWorld()
-  }
+  // @Get('new')
+  // helloWorld() {
+  //   return this.appService.getHelloWorld()
+  // }
 
-  @Get('new/book')
-  getBooks() {
-    return 'Book are loading..'
-  }
+  // @Get('new/book')
+  // getBooks() {
+  //   return 'Book are loading..'
+  // }
 
-  @Get(':id')
-  paramsExample( @Param('id') id: string ) {
-    return `Your ID is: ${id}`
-  }
+  // @Get(':id')
+  // paramsExample( @Param('id') id: string ) {
+  //   return `Your ID is: ${id}`
+  // }
 
-  @Post('postTest')
-  postRequestHandle(
-    @Body()
-    bodyData: postTest,
-  ) {
-    console.log(bodyData)
-    return bodyData
-  }
+  // @Post('postTest')
+  // postRequestHandle(
+  //   @Body()
+  //   bodyData: postTest,
+  // ) {
+  //   console.log(bodyData)
+  //   return bodyData
+  // }
 
 }

@@ -11,7 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       envFilePath: '.env',
       isGlobal: true
     }),
-    MongooseModule.forRoot(process.env.DB_URI || ''),
+    MongooseModule.forRoot(process.env.DB_URI || '', {}),
     BookModule
   ],
   controllers: [AppController],
