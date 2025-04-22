@@ -1,5 +1,6 @@
-import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator"
+import { IsEmpty, IsEnum, IsNumber, IsOptional, IsString } from "class-validator"
 import { Category } from "../schema/book.schema"
+import { User } from "src/auth/schemas/user.schema"
 
 export class updateBookDto {
 
@@ -22,4 +23,7 @@ export class updateBookDto {
     @IsOptional()
     @IsString()
     readonly author: string
+
+    @IsEmpty({ message: "You cannot pass user id" })
+    readonly user: User
 }
