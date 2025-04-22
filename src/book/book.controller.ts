@@ -6,6 +6,9 @@ import { updateBookDto } from './dto/update-book.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core'
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/auth/schemas/user.schema';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('book')
 export class BookController {
@@ -15,6 +18,8 @@ export class BookController {
     ) {}
 
     @Get()
+    @Roles(Role.Admin, Role.Manager, Role.Agent)
+    @UseGuards(AuthGuard(), RolesGuard)
     async getAllBooks(
         @Query()
         query: ExpressQuery
