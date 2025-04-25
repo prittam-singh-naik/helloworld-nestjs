@@ -13,7 +13,7 @@ export async function uploadImages(files: Array<Express.Multer.File>) {
             const images: any = []
 
             files.forEach( async (file) => {
-                const fileName = file.filename
+                const fileName = file.originalname
 
                 const params = {
                     Bucket: `${process.env.AWS_S3_BUCKET_NAME}/books`,

@@ -72,7 +72,6 @@ export class BookController {
         @Param('bookId') bookId: string,
         @UploadedFiles() files: Array<Express.Multer.File>
     ) {
-        console.log(files)
         return  this.bookService.uploadImages(bookId, files)
     }
 
