@@ -18,7 +18,7 @@ export class BookController {
     ) {}
 
     @Get()
-    @Roles(Role.Admin, Role.Manager, Role.Agent)
+    @Roles(Role.Admin, Role.Manager)
     @UseGuards(AuthGuard(), RolesGuard)
     async getAllBooks(
         @Query()

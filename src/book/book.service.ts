@@ -4,6 +4,7 @@ import { Book } from './schema/book.schema';
 import * as mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core'
 import { User } from 'src/auth/schemas/user.schema';
+import { uploadImages } from 'src/utils/aws';
 
 @Injectable()
 export class BookService {
@@ -24,6 +25,11 @@ export class BookService {
                 $options: 'i'
             }
         } : {}
+
+
+        uploadImages()
+
+
         const books = await this.bookModel.find({ ...keyword }).limit(resPerPage).skip(skip)
         return books
     }
