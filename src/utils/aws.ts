@@ -1,7 +1,7 @@
 import { S3 } from 'aws-sdk'
 
 
-export async function uploadImages() {
+export async function uploadImages(files: Array<Express.Multer.File>) {
     return new Promise((resolve, reject) => {
         try {
 
@@ -9,7 +9,27 @@ export async function uploadImages() {
                 accessKeyId: process.env.AWS_ACCESS_KEY_ID,
                 secretAccessKey: process.env.AWS_SECRET_KEY
             })
-            console.log(`logging s3:`, s3)
+            
+            const images: any = []
+
+            files.forEach( async (file) => {
+                const fileName = file.filename
+
+                const params = {
+                    Bucket: `${process.env.AWS_S3_BUCKET_NAME}/books`,
+                    Key: fileName,
+                    Body: file.buffer,
+                }
+                const uploadResponse = await s3.upload(params).promise()
+
+                images.push({
+                    Bucket: uploadResponse.Bucket,
+                    Key: uploadResponse.Key,
+                    Location: uploadResponse.Location,
+                })
+
+                if(images.length === files.length) resolve(images)
+            })
 
         } catch (err) {
             reject(err)

@@ -26,10 +26,6 @@ export class BookService {
             }
         } : {}
 
-
-        uploadImages()
-
-
         const books = await this.bookModel.find({ ...keyword }).limit(resPerPage).skip(skip)
         return books
     }
@@ -78,6 +74,21 @@ export class BookService {
         if (!deleteResponse) throw new NotFoundException('Book id not found')
             
         return deleteResponse
+    }
+
+    async uploadImages(bookId: string, files: Array<Express.Multer.File>) {
+        const book = await this.bookModel.findById(bookId)
+
+        if (!book) throw new NotFoundException('Book not found')
+
+        const images = await uploadImages(files)
+
+        book.images = images as object[]
+
+        await book.save()
+
+        return book
+
     }
 
 
