@@ -4,6 +4,8 @@ import { BookService } from './book.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BookSchema } from './schema/book.schema';
 import { AuthModule } from 'src/auth/auth.module';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -13,6 +15,9 @@ import { AuthModule } from 'src/auth/auth.module';
     ])
   ],
   controllers: [BookController],
-  providers: [BookService]
+  providers: [BookService, {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }]
 })
 export class BookModule {}
