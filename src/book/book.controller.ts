@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseFilePipeBuilder, Post, Put, Query, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { BookService } from './book.service';
 import { Book } from './schema/book.schema';
 import { createBookDto } from './dto/create-book.dto';
@@ -70,7 +70,19 @@ export class BookController {
     @UseInterceptors(FilesInterceptor('files'))
     async uploadImages(
         @Param('bookId') bookId: string,
-        @UploadedFiles() files: Array<Express.Multer.File>
+        @UploadedFiles(
+            new ParseFilePipeBuilder()
+            .addFileTypeValidator({
+                fileType: /(jpg|jpeg|png)$/
+            })
+            .addMaxSizeValidator({
+                maxSize: 1000 * 1000,
+                message: 'File size must be less than 1MB'
+            })
+            .build({
+                errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+            })
+        ) files: Array<Express.Multer.File>
     ) {
         return  this.bookService.uploadImages(bookId, files)
     }
